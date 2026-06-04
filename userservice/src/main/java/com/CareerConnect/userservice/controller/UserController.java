@@ -4,6 +4,7 @@ package com.CareerConnect.userservice.controller;
 import com.CareerConnect.userservice.dto.RegisterRequest;
 import com.CareerConnect.userservice.dto.UserResponse;
 import com.CareerConnect.userservice.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(
-            @RequestBody RegisterRequest request) {
+          @Valid @RequestBody RegisterRequest request) {
 
         return ResponseEntity.ok(userService.register(request));
     }

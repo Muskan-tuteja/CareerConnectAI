@@ -24,7 +24,7 @@ user.setPassword(request.getPassword());
 user.setFirstname(request.getFirstname());
 user.setLastname(request.getLastname());
 
-User savedUser = new User();
+User savedUser = repository.save(user);
 UserResponse userResponse = new UserResponse();
         userResponse.setEmail(savedUser.getEmail());
         userResponse.setPassword(savedUser.getPassword());
