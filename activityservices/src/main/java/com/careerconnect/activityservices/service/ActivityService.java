@@ -6,6 +6,8 @@ import com.careerconnect.activityservices.dto.ActivityRequest;
 import com.careerconnect.activityservices.dto.ActivityResponse;
 import com.careerconnect.activityservices.model.Activity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +15,10 @@ import org.springframework.stereotype.Service;
 public class ActivityService {
     private final ActivityRepository activityRepository;
     private final UserValidationService uservalidationService;
+    private final KafkaTemplate<String, Activity>KafkaTemplate;
+
+    @Value("${spring.kafka.topic.name}")
+    private String topicName;
 
     public ActivityResponse trackActivity(ActivityRequest request) {
 
@@ -31,6 +37,13 @@ if(!isValidUser){
                 .build();
 
         Activity savedActivity = activityRepository.save(activity);
+
+        try{
+            KafkaTemplate.send(topicName, savedActivity.getUserId(), savedActivity);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return mapToResponse(savedActivity);
     }
 
