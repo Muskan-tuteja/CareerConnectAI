@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-// @AllArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class UserService {
 
