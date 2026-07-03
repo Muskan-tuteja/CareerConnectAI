@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-@Slf4j
+// @Slf4j
 public class UserService {
 
     private final UserRepository repository;
